@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const fs = require('fs')
+const fse = require('fs-extra')
 const path = require('path')
 
 // @route   /newDir/:newDirName'
@@ -10,7 +10,7 @@ router.post('/newDir/:newDirName', (req, res) => {
   const newDirecotyName = req.params.newDirName
   const newDirecotyPath = path.resolve(__dirname, '../../Orders', newDirecotyName)
 
-  fs.mkdir(newDirecotyPath, err => {
+  fse.mkdir(newDirecotyPath, err => {
     if (err) {
       res.status(500).json({
         error: err
@@ -22,6 +22,22 @@ router.post('/newDir/:newDirName', (req, res) => {
       })
     }
   })
+})
+
+// @route   /removeDir/:dirName
+// @desc    Usuwa katalog wraz z zawartością
+
+router.delete('/removeDir/:dirName', (req, res) => {
+  const directoryName = req.params.dirName
+  const directoryPath = path.resolve(__dirname, '../../Orders', directoryName)
+
+  fse.remove(directoryPath)
+    .then(() => res.json({
+      message: `Usunięto katalog ${directoryName}`
+    }))
+    .catch(err => res.status(500).json({
+      error: err
+    }))
 })
 
 module.exports = router
