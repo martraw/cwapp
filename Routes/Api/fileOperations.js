@@ -6,7 +6,7 @@ const path = require('path')
 
 // @route   /file/copy
 // @desc    Kopiuje plik z podanej lokalizacji źródłowej do lokalizacji docelowej
-router.post('/copy', (req, res) => {
+router.post('/copy', (req, res, next) => {
   const { srcPath, fileName, dstPath } = req.body
 
   fse.copy(srcPath, path.resolve(dstPath, fileName))
@@ -16,9 +16,7 @@ router.post('/copy', (req, res) => {
       })
     })
     .catch(err => {
-      res.status(500).json({
-        error: err
-      })
+      next(err)
     })
 })
 
