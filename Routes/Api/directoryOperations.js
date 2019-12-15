@@ -3,7 +3,7 @@ const router = express.Router()
 const fse = require('fs-extra')
 const path = require('path')
 
-// @route   /newDir/:newDirName'
+// @route   /directory/newDir/:newDirName'
 // @desc    Tworzy nowy katalog w katalogu Orders
 
 router.post('/newDir/:newDirName', (req, res) => {
@@ -24,7 +24,7 @@ router.post('/newDir/:newDirName', (req, res) => {
   })
 })
 
-// @route   /removeDir/:dirName
+// @route   /directory/removeDir/:dirName
 // @desc    Usuwa katalog wraz z zawartością
 
 router.delete('/removeDir/:dirName', (req, res) => {
