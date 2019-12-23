@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import TitleBar from './Components/TitleBar'
+import AssetsList from './Components/AssetsList';
+
+
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import OrderList from './Components/OrderList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{maxHeight: '100vh'}}>
+      <TitleBar />
+      <Container fluid className='vh-100'>
+        <Row>
+          <Col>
+            <AssetsList />
+          </Col>
+          <Col>
+            <OrderList />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
