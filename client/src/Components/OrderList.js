@@ -1,39 +1,21 @@
-import React from 'react'
-import ListGroup from 'react-bootstrap/ListGroup'
+import React , {useContext} from 'react'
 import Accordion from 'react-bootstrap/Accordion'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import OrderListItem from './OrderListItem'
 import OrderListDirectory from './OrderListDirectory'
 
+import {OrderContext} from '../Context/OrderContext'
 
 const OrderList = () => {
+
+  const { orders } = useContext(OrderContext)
+
   return (
     <>
-      <h3 className='text-center my-4'>Zamówienia</h3>
+      <h3 className='text-center my-4'>Zawartość katalogu Orders</h3>
       
       <Accordion defaultActiveKey="0">
-        <OrderListDirectory index='0'>
-          <OrderListItem />
-          <OrderListItem />
-          <OrderListItem />
-          <OrderListItem />
-        </OrderListDirectory>
-
-        <OrderListDirectory index='1'>
-          <OrderListItem />
-          <OrderListItem />
-          <OrderListItem />
-          <OrderListItem />
-        </OrderListDirectory>
-
-        <OrderListDirectory index='2'>
-          <OrderListItem />
-          <OrderListItem />
-          <OrderListItem />
-          <OrderListItem />
-        </OrderListDirectory>
-        
+        {orders.map((item, index) => {
+          return <OrderListDirectory index={index} directory={item} key={item.directoryName}/>
+        })}
       </Accordion>
     </>
   )

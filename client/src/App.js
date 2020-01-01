@@ -7,16 +7,16 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import OrderList from './Components/OrderList';
 
-import { AssetsContextProvider } from './Context/AssetsContext'
+import { OrderContextProvider } from './Context/OrderContext'
 
 function App() {
   return (
     <div className="App" style={{ maxHeight: '100vh' }}>
-      <AssetsContextProvider>
+      <OrderContextProvider>
         <TitleBar />
         <Container fluid className='vh-100'>
           <Row>
-            <Col>
+            <Col xs={8}>
               <AssetsList />
             </Col>
             <Col>
@@ -24,7 +24,7 @@ function App() {
             </Col>
           </Row>
         </Container>
-      </AssetsContextProvider>
+      </OrderContextProvider>
     </div>
   );
 }

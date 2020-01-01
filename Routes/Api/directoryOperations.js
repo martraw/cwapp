@@ -28,7 +28,8 @@ router.post('/newDir/:newDirName', (req, res) => {
 // @desc    Usuwa katalog wraz z zawartością
 
 router.delete('/removeDir/:dirName', (req, res) => {
-  const directoryName = req.params.dirName
+  const directoryName = req.params.dirName || '/'
+  console.log(directoryName)
   const directoryPath = path.resolve(__dirname, '../../Orders', directoryName)
 
   fse.remove(directoryPath)
@@ -39,5 +40,12 @@ router.delete('/removeDir/:dirName', (req, res) => {
       error: err
     }))
 })
+
+router.delete('/removeAll', (req, res, next) => {
+  const ordersDirPath = path.resolve(__dirname, '../../Orders')
+  fse.emptyDir(ordersDirPath)
+    .then(() => res.json({message: 'Uninięto całą zawartość kaltalogu Orders'}))
+    .catch(err => next(err))
+} )
 
 module.exports = router

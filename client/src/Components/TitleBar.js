@@ -1,25 +1,20 @@
-import React from 'react'
-import Navbar from 'react-bootstrap/Navbar'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import React, { useContext } from 'react'
+import { OrderContext } from '../Context/OrderContext'
 
 
 const TitleBar = () => {
+
+  const { clearOrdersDir } = useContext(OrderContext)
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
       <div className="d-flex flex-grow-1">
-        
-        <form className="mr-2 my-auto w-100 d-inline-block order-1">
-          <div className="input-group ">
-            <input type="text" className="form-control border border-right-0" placeholder="Search..." />
-            
-          </div>
-        </form>
+        <nav className="navbar navbar-dark ">
+          <span className="navbar-brand mb-0 h1">CaseWorld</span>
+        </nav>
       </div>
       <div>
-        <button className='btn btn-success ml-5'>Utwórz nowy katalog</button>
+        <button className='btn btn-danger ml-5' onClick={clearOrdersDir}>Usuń zawartość katalogu z Orders</button>
       </div>
     </nav>
   )
