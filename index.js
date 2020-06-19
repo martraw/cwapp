@@ -39,5 +39,12 @@ app.get('/', (req, res) => res.send('Helloooo'))
 const port = 5000
 
 app.listen(port, () => {
-  console.log('applikacja działa')
+  console.log(
+  `-------------------------------------------------------
+
+    Aplikacja CaseWorld rev. 2 działa pod adresem:
+
+        http://localhost:${port}
+
+--------------------------------------------------------`)
 })

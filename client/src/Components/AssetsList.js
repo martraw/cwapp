@@ -12,6 +12,7 @@ const AssetsList = () => {
   const [assetsArr, setAssetsArr] = useState([])
   const [fileContent, setFileContent] = useState([])
   const [tableContent, setTableContent] = useState([])
+  const [devider, setDevider] = useState(15) // Devider określa po ile plików ma być w podkatalogach tworzonych w katalogu Orders
   const { orders, setOrders } = useContext(OrderContext)
 
 
@@ -35,8 +36,13 @@ const AssetsList = () => {
 
   const makeOrders = (orderList) => {
 
+    const payload = {
+      orderList,
+      devider
+    }
+
     if (orderList.length > 0) {
-      axios.post('/file/makeOrders', { orderList: orderList })
+      axios.post('/file/makeOrders', payload)
         .then(resp => setOrders(resp.data.ordersContent))
         .catch(err => console.log(err))
     }
@@ -58,7 +64,7 @@ const AssetsList = () => {
               matchingAsset
             }
           )
-        } else {
+        } else { // Nie pamiętam czemu ten else ma służyć.
           tempTableContent.push(
             {
               index: index + 1,
@@ -78,13 +84,25 @@ const AssetsList = () => {
       .then(res => setAssetsArr([...res.data.assetsList]))
   }, [])
 
-  console.log(`Remder`)
+  console.log(`Render`)
   return (
     <>
-      <div className='input-group d-flex justify-content-between my-4' >
-        <input type='file' onChange={fileInputChangeHandler} />
+      <form className="form-inline d-flex justify-content-between my-4">
+        <input type='file' className="" onChange={fileInputChangeHandler} />
+        <div className="input-group mr-sm-2">
+          <div className="input-group-prepend">
+            <div className="input-group-text">Liczba plików w katalogu</div>
+          </div>
+          <input
+            type="number"
+            min="1"
+            className="form-control"
+            placeholder="Wpisz liczbę"
+            value={devider}
+            onChange={(e) => setDevider(Number(e.target.value))} />
+        </div>
         <Button variant='success' disabled={orders.length > 0 || tableContent.length < 1} onClick={() => makeOrders(tableContent)}>Kopiuj do katalogów</Button>
-      </div>
+      </form>
 
       <Table bordered striped>
         <thead>

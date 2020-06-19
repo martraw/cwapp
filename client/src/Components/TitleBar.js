@@ -10,7 +10,7 @@ const TitleBar = () => {
     <nav className="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
       <div className="d-flex flex-grow-1">
         <nav className="navbar navbar-dark ">
-          <span className="navbar-brand mb-0 h1">CaseWorld</span>
+          <span className="navbar-brand mb-0 h1">CaseWorld rev. 2</span>
         </nav>
       </div>
       <div>

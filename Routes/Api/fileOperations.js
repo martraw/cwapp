@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const fse = require('fs-extra')
 const path = require('path')
+const checkLeadingZero = require('../Helpers/leadingZero')
 
 const getOrders = require('../Helpers/getOrders')
 
@@ -42,11 +43,16 @@ router.delete('/remove', (req, res, next) => {
     })
 })
 
+
+// @route   /file/makeOrders
+// @desc    Tworzy odpowiednie katalogi i kopuiuje odpowiednio noazwane pliki do katalogów
 router.post('/makeOrders', (req, res, next) => {
   const orderList = req.body.orderList
+  const devider = req.body.devider // Devider określa po ile plików ma być w podkatalogach tworzonych w katalogu Orders
   const ordersDirPath = path.resolve(__dirname, '../../Orders')
-  let curentDir = orderList.length <= 15 ? `1 - ${orderList.length}` : `1 - 15`
+  let curentDir = orderList.length <= devider ? `01 - ${checkLeadingZero(orderList.length)}` : `01 - ${checkLeadingZero(devider)}`
 
+  
   orderList.forEach(orderItem => {
     const { index, matchingAsset } = orderItem
 
@@ -57,9 +63,8 @@ router.post('/makeOrders', (req, res, next) => {
         next(err)
       }
 
-      if (index % 15 === 0) {
-        curentDir = `${index + 1} - ${index + 15}`
-        curentDir = index + 15 > orderList.length ? `${index + 1} - ${orderList.length}` : `${index + 1} - ${index + 15}`
+      if (index % devider === 0 && index < orderList.length) {
+        curentDir = index + devider > orderList.length ? `${checkLeadingZero(index + 1)} - ${orderList.length}` : `${checkLeadingZero(index + 1)} - ${checkLeadingZero(index + devider)}`
         fse.mkdirSync(`${ordersDirPath}/${curentDir}`)
       }
     }
